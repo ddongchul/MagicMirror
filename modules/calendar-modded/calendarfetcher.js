@@ -4,7 +4,6 @@ const Log = require("logger");
 const NodeHelper = require("node_helper");
 const CalendarFetcherUtils = require("./calendarfetcherutils");
 const { getUserAgent } = require("#server_functions");
-const { scheduleTimer } = require("#module_functions");
 
 /**
  *
@@ -66,15 +65,15 @@ const CalendarFetcher = function (url, reloadInterval, excludedEvents, maximumEn
 					});
 				} catch (error) {
 					fetchFailedCallback(this, error);
-					scheduleTimer(reloadTimer, reloadInterval, fetchCalendar);
+					reloadTimer = setTimeout(fetchCalendar, reloadInterval);
 					return;
 				}
 				this.broadcastEvents();
-				scheduleTimer(reloadTimer, reloadInterval, fetchCalendar);
+				reloadTimer = setTimeout(fetchCalendar, reloadInterval);
 			})
 			.catch((error) => {
 				fetchFailedCallback(this, error);
-				scheduleTimer(reloadTimer, reloadInterval, fetchCalendar);
+				reloadTimer = setTimeout(fetchCalendar, reloadInterval);
 			});
 	};
 

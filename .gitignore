@@ -57,6 +57,10 @@ Temporary Items
 # Ignore all modules
 /modules/*
 
+# ...except our own hand-maintained calendar module (no upstream repo to reinstall from)
+!/modules/calendar-modded/
+!/modules/calendar-modded/**
+
 # Ignore users config file but keep the samples.
 config
 !config/config.js.sample
@@ -71,6 +75,10 @@ config
 *.orig
 *.rej
 *.bak
+*.backup
+
+# Local scratch archive for files removed during cleanup passes
+/_archive/
 
 # Ignore positions file (#3518)
 js/positions.js

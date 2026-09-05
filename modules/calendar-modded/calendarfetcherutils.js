@@ -109,7 +109,7 @@ const CalendarFetcherUtils = {
 		Log.debug("event before rrule.between=", JSON.stringify(event, null, 2), "exdates=", event.exdate);
 
 		Log.debug(`RRule: ${rule.toString()}`);
-		rule.options.tzid = null; // RRule gets *very* confused with timezones
+		//rule.options.tzid = null; // RRule gets *very* confused with timezones
 
 		let dates = rule.between(searchFromDate, searchToDate, true, () => {
 			return true;
@@ -124,7 +124,8 @@ const CalendarFetcherUtils = {
 
 		// Dates are returned in UTC timezone but with localdatetime because tzid is null.
 		// So we map the date to a moment using the original timezone of the event.
-		return dates.map((d) => (event.start.tz ? moment.tz(d, "UTC").tz(event.start.tz, true) : moment.tz(d, "UTC").tz(CalendarFetcherUtils.getLocalTimezone(), true)));
+		return dates.map((d) => (event.start.tz ? moment.tz(d, "UTC").tz(event.start.tz) : moment.tz(d, "UTC").tz(CalendarFetcherUtils.getLocalTimezone())));
+		//return dates.map((d) => (event.start.tz ? moment.tz(d, "UTC").tz(event.start.tz, true) : moment.tz(d, "UTC").tz(CalendarFetcherUtils.getLocalTimezone(), true)));
 	},
 
 	/**
